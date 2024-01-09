@@ -76,6 +76,20 @@ public class BasicItemController {
         return "basic/item";
     }
 
+    @GetMapping("/{itemId}/edit")
+    public String editForm(@PathVariable("itemId") Long itemId, Model model) {
+        Item item = itemRepository.findById(itemId);
+        model.addAttribute("item", item);
+        return "basic/editForm";
+    }
+
+    @PostMapping("/{itemId}/edit")
+    public String edit(@PathVariable("itemId") Long itemId, @ModelAttribute Item item) {
+        itemRepository.updateItem(itemId, item);
+        return "redirect:/basic/items/{itemId}";
+    }
+
+
 
     /**
      * 테스터용 데이터 추가
